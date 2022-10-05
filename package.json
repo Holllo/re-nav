@@ -1,0 +1,48 @@
+{
+  "name": "re-nav",
+  "license": "AGPL-3.0-or-later",
+  "repository": "https://git.bauke.xyz/Holllo/re-nav",
+  "private": true,
+  "scripts": {
+    "start": "vite build -m development --watch",
+    "start:chromium": "VITE_BROWSER=chromium pnpm start",
+    "clean": "trash build web-ext-artifacts",
+    "build": "pnpm clean && pnpm build:chromium && pnpm build:firefox && pnpm zip-source",
+    "build:chromium": "VITE_BROWSER=chromium vite build && web-ext build -n re-nav-chromium-{version}.zip -s build/chromium",
+    "build:firefox": "VITE_BROWSER=firefox vite build && web-ext build -n re-nav-firefox-{version}.zip -s build/firefox",
+    "zip-source": "git archive --format zip --output web-ext-artifacts/re-nav-source.zip HEAD",
+    "test": "xo && stylelint 'source/**/*.scss' && tsc"
+  },
+  "dependencies": {
+    "@holllo/migration-helper": "^0.1.3",
+    "@holllo/preact-components": "^0.2.3",
+    "htm": "^3.1.1",
+    "modern-normalize": "^1.1.0",
+    "preact": "^10.11.0",
+    "webextension-polyfill": "^0.10.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.4.0",
+    "@types/babel__core": "^7.1.19",
+    "@types/webextension-polyfill": "^0.9.1",
+    "postcss": "^8.4.16",
+    "sass": "^1.55.0",
+    "stylelint": "^14.13.0",
+    "stylelint-config-standard-scss": "^5.0.0",
+    "trash-cli": "^5.0.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.4",
+    "vite-plugin-web-extension": "^1.4.4",
+    "web-ext": "^7.2.0",
+    "xo": "^0.52.3"
+  },
+  "xo": {
+    "prettier": true,
+    "rules": {
+      "@typescript-eslint/consistent-type-definitions": "off",
+      "@typescript-eslint/consistent-type-imports": "off",
+      "n/file-extension-in-import": "off"
+    },
+    "space": true
+  }
+}
