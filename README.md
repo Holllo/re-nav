@@ -4,7 +4,7 @@
 
 ## Installation
 
-You can install Fangs through the stores linked above, [manually from a file] (see [the Releases page] for ZIP files) or [from source](#development).
+You can install Re-Nav through the stores linked above, [manually from a file] (see [the Releases page] for ZIP files) or [from source](#development).
 
 [manually from a file]: https://support.mozilla.org/en-US/kb/find-and-install-add-ons-add-features-to-firefox#w_how-do-i-find-and-install-add-ons
 [the Releases page]: https://git.bauke.xyz/Holllo/re-nav/releases
