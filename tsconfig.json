@@ -15,10 +15,5 @@
     "source/**/*.ts",
     "tests/**/*.ts",
     "vite.config.ts"
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+  ]
 }
