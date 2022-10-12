@@ -6,16 +6,19 @@ import {
   parseRedirect,
   HostnameRedirect,
   Redirect,
+  Redirects,
   RedirectParameters,
 } from '../source/redirect/exports.js';
 
 test('parseRedirect', (t) => {
-  const samples: RedirectParameters[] = [
+  const samples: Array<Redirects['parameters']> = [
     {
       test: 'Invalid parameters',
-    } as unknown as RedirectParameters,
+    } as unknown as Redirects['parameters'],
     {
       hostname: 'example.org',
+      matchType: 'hostname',
+      toMatch: 'example.com',
       type: 'hostname',
     },
   ];
@@ -33,6 +36,8 @@ test('parseRedirect', (t) => {
 
 test('Redirect.redirect', (t) => {
   const hostnameRedirect = new HostnameRedirect({
+    matchType: 'hostname',
+    toMatch: 'example.com',
     hostname: 'example.org',
     type: 'hostname',
   });
