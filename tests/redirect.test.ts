@@ -22,6 +22,7 @@ test('parseRedirect', (t) => {
     {
       test: 'Invalid parameters',
     } as unknown as Redirects['parameters'],
+    undefined as unknown as Redirects['parameters'],
     hostnameParameters,
   ];
 
