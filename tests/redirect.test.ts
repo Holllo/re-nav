@@ -10,17 +10,19 @@ import {
   RedirectParameters,
 } from '../source/redirect/exports.js';
 
+const hostnameParameters: HostnameRedirect['parameters'] = {
+  hostname: 'example.org',
+  matchType: 'hostname',
+  toMatch: 'example.com',
+  type: 'hostname',
+};
+
 test('parseRedirect', (t) => {
   const samples: Array<Redirects['parameters']> = [
     {
       test: 'Invalid parameters',
     } as unknown as Redirects['parameters'],
-    {
-      hostname: 'example.org',
-      matchType: 'hostname',
-      toMatch: 'example.com',
-      type: 'hostname',
-    },
+    hostnameParameters,
   ];
 
   for (const sample of samples) {
@@ -35,12 +37,7 @@ test('parseRedirect', (t) => {
 });
 
 test('Redirect.redirect', (t) => {
-  const hostnameRedirect = new HostnameRedirect({
-    matchType: 'hostname',
-    toMatch: 'example.com',
-    hostname: 'example.org',
-    type: 'hostname',
-  });
+  const hostnameRedirect = new HostnameRedirect(hostnameParameters);
 
   const samples: Array<[string, Redirect<RedirectParameters>]> = [
     ['https://example.com', hostnameRedirect],
@@ -61,13 +58,7 @@ test('Redirect.redirect', (t) => {
 test('Redirect.isMatch', (t) => {
   type UrlSamples = Array<[string, boolean]>;
 
-  const hostnameRedirect = new HostnameRedirect({
-    hostname: 'example.org',
-    matchType: 'hostname',
-    toMatch: 'example.com',
-    type: 'hostname',
-  });
-
+  const hostnameRedirect = new HostnameRedirect(hostnameParameters);
   const hostnameSamples: UrlSamples = [
     ['https://example.com', true],
     ['https://www.example.com', false],
