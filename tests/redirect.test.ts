@@ -57,3 +57,35 @@ test('Redirect.redirect', (t) => {
     );
   }
 });
+
+test('Redirect.isMatch', (t) => {
+  type UrlSamples = Array<[string, boolean]>;
+
+  const hostnameRedirect = new HostnameRedirect({
+    hostname: 'example.org',
+    matchType: 'hostname',
+    toMatch: 'example.com',
+    type: 'hostname',
+  });
+
+  const hostnameSamples: UrlSamples = [
+    ['https://example.com', true],
+    ['https://www.example.com', false],
+    ['https://example.org', false],
+  ];
+
+  const invalidRedirect = new HostnameRedirect({
+    test: 'invalid',
+  } as unknown as Redirects['parameters']);
+
+  const samples: Array<[Redirects, UrlSamples]> = [
+    [invalidRedirect, [['https://example.org', false]]],
+    [hostnameRedirect, hostnameSamples],
+  ];
+
+  for (const [redirect, urlSamples] of samples) {
+    for (const [sample, expected] of urlSamples) {
+      t.is(redirect.isMatch(new URL(sample)), expected);
+    }
+  }
+});
