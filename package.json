@@ -70,8 +70,7 @@
       {
         "files": "tests/**/*.test.ts",
         "rules": {
-          "@typescript-eslint/triple-slash-reference": "off",
-          "no-await-in-loop": "off"
+          "@typescript-eslint/triple-slash-reference": "off"
         }
       }
     ],
@@ -79,7 +78,8 @@
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/consistent-type-imports": "off",
-      "n/file-extension-in-import": "off"
+      "n/file-extension-in-import": "off",
+      "no-await-in-loop": "off"
     },
     "space": true
   }
