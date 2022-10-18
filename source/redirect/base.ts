@@ -1,6 +1,7 @@
 import {HostnameParameters} from './hostname.js';
+import {SimpleParameters} from './simple.js';
 
-export type RedirectParameters = HostnameParameters;
+export type RedirectParameters = HostnameParameters | SimpleParameters;
 
 export type Matcher = {
   matchType: 'hostname';
