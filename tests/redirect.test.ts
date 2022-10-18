@@ -8,6 +8,7 @@ import {
   Redirect,
   Redirects,
   RedirectParameters,
+  SimpleRedirect,
 } from '../source/redirect/exports.js';
 
 const hostnameParameters: HostnameRedirect['parameters'] = {
@@ -17,6 +18,13 @@ const hostnameParameters: HostnameRedirect['parameters'] = {
   type: 'hostname',
 };
 
+const simpleParameters: SimpleRedirect['parameters'] = {
+  matchType: 'hostname',
+  target: 'https://example.org/simple',
+  toMatch: 'example.com',
+  type: 'simple',
+};
+
 test('parseRedirect', (t) => {
   const samples: Array<Redirects['parameters']> = [
     {
@@ -24,6 +32,7 @@ test('parseRedirect', (t) => {
     } as unknown as Redirects['parameters'],
     undefined as unknown as Redirects['parameters'],
     hostnameParameters,
+    simpleParameters,
   ];
 
   for (const sample of samples) {
@@ -39,10 +48,13 @@ test('parseRedirect', (t) => {
 
 test('Redirect.redirect', (t) => {
   const hostnameRedirect = new HostnameRedirect(hostnameParameters);
+  const simpleRedirect = new SimpleRedirect(simpleParameters);
 
   const samples: Array<[string, Redirect<RedirectParameters>]> = [
     ['https://example.com', hostnameRedirect],
     ['https://example.com/path#hash?query=test', hostnameRedirect],
+    ['https://example.com', simpleRedirect],
+    ['https://example.com/path', simpleRedirect],
   ];
 
   for (const [index, [url, redirect]] of samples.entries()) {
