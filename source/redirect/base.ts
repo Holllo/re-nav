@@ -1,18 +1,31 @@
-import {HostnameParameters} from './hostname.js';
-import {SimpleParameters} from './simple.js';
+export const matcherTypes = ['hostname'] as const;
+export const redirectTypes = ['hostname', 'simple'] as const;
 
-export type RedirectParameters = HostnameParameters | SimpleParameters;
+export type MatcherType = typeof matcherTypes[number];
+export type RedirectType = typeof redirectTypes[number];
+
+export function narrowMatchType(type: string): type is MatcherType {
+  return matcherTypes.includes(type as MatcherType);
+}
+
+export function narrowRedirectType(type: string): type is RedirectType {
+  return redirectTypes.includes(type as RedirectType);
+}
 
 export type Matcher = {
-  matchType: 'hostname';
+  matcherType: MatcherType;
   toMatch: string;
+};
+
+export type RedirectParameters = {
+  type: RedirectType;
 };
 
 export abstract class Redirect<P extends RedirectParameters> {
   constructor(public parameters: P & Matcher) {}
 
   public isMatch(url: URL): boolean {
-    if (this.parameters.matchType === 'hostname') {
+    if (this.parameters.matcherType === 'hostname') {
       return url.hostname === this.parameters.toMatch;
     }
 
