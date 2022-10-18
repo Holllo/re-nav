@@ -104,3 +104,17 @@ test('Narrow match & redirect types', (t) => {
   t.true(matcherTypes.every((value) => narrowMatchType(value)));
   t.true(redirectTypes.every((value) => narrowRedirectType(value)));
 });
+
+test('Redirect getters & setters', (t) => {
+  const samples: Array<[Redirects, string]> = [
+    [new HostnameRedirect(hostnameParameters), hostnameParameters.hostname],
+    [new SimpleRedirect(simpleParameters), simpleParameters.target],
+  ];
+
+  for (const [redirect, value] of samples) {
+    t.is(redirect.redirectValue, value);
+    const newValue = `${value} test`;
+    redirect.redirectValue = newValue;
+    t.is(redirect.redirectValue, newValue);
+  }
+});
