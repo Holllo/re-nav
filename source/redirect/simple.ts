@@ -2,7 +2,7 @@ import {Redirect} from './base.js';
 
 export type SimpleParameters = {
   target: string;
-  type: 'simple';
+  redirectType: 'simple';
 };
 
 export class SimpleRedirect extends Redirect<SimpleParameters> {

@@ -10,13 +10,13 @@ export type Redirects = HostnameRedirect | SimpleRedirect;
 export function parseRedirect<P extends Redirects['parameters']>(
   parameters: P,
 ): Redirects | undefined {
-  const type = parameters?.type;
+  const redirectType = parameters?.redirectType;
 
-  if (type === 'hostname') {
+  if (redirectType === 'hostname') {
     return new HostnameRedirect(parameters);
   }
 
-  if (type === 'simple') {
+  if (redirectType === 'simple') {
     return new SimpleRedirect(parameters);
   }
 }

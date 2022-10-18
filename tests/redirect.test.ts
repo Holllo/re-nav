@@ -19,14 +19,14 @@ const hostnameParameters: HostnameRedirect['parameters'] = {
   hostname: 'example.org',
   matcherType: 'hostname',
   toMatch: 'example.com',
-  type: 'hostname',
+  redirectType: 'hostname',
 };
 
 const simpleParameters: SimpleRedirect['parameters'] = {
   matcherType: 'hostname',
   target: 'https://example.org/simple',
   toMatch: 'example.com',
-  type: 'simple',
+  redirectType: 'simple',
 };
 
 test('parseRedirect', (t) => {
@@ -101,6 +101,6 @@ test('Redirect.isMatch', (t) => {
 test('Narrow match & redirect types', (t) => {
   t.false(narrowMatchType('invalid'));
   t.false(narrowRedirectType('invalid'));
-  t.true(matcherTypes.every((type) => narrowMatchType(type)));
-  t.true(redirectTypes.every((type) => narrowRedirectType(type)));
+  t.true(matcherTypes.every((value) => narrowMatchType(value)));
+  t.true(redirectTypes.every((value) => narrowRedirectType(value)));
 });
