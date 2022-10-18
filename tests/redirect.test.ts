@@ -78,7 +78,7 @@ test('Redirect.isMatch', (t) => {
   const hostnameRedirect = new HostnameRedirect(hostnameParameters);
   const hostnameSamples: UrlSamples = [
     ['https://example.com', true],
-    ['https://www.example.com', false],
+    ['https://www.example.com', true],
     ['https://example.org', false],
   ];
 
