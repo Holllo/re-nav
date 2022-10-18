@@ -13,13 +13,13 @@ import {
 
 const hostnameParameters: HostnameRedirect['parameters'] = {
   hostname: 'example.org',
-  matchType: 'hostname',
+  matcherType: 'hostname',
   toMatch: 'example.com',
   type: 'hostname',
 };
 
 const simpleParameters: SimpleRedirect['parameters'] = {
-  matchType: 'hostname',
+  matcherType: 'hostname',
   target: 'https://example.org/simple',
   toMatch: 'example.com',
   type: 'simple',
