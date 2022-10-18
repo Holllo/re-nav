@@ -26,7 +26,10 @@ export abstract class Redirect<P extends RedirectParameters> {
 
   public isMatch(url: URL): boolean {
     if (this.parameters.matcherType === 'hostname') {
-      return url.hostname === this.parameters.toMatch;
+      const hostname = url.hostname.startsWith('www.')
+        ? url.hostname.slice(4)
+        : url.hostname;
+      return hostname === this.parameters.toMatch;
     }
 
     return false;
