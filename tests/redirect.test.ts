@@ -68,7 +68,7 @@ test('Redirect.isMatch', (t) => {
 
   const invalidRedirect = new HostnameRedirect({
     test: 'invalid',
-  } as unknown as Redirects['parameters']);
+  } as unknown as HostnameRedirect['parameters']);
 
   const samples: Array<[Redirects, UrlSamples]> = [
     [invalidRedirect, [['https://example.org', false]]],
