@@ -3,7 +3,11 @@
 import test from 'ava';
 
 import {
+  matcherTypes,
+  narrowMatchType,
+  narrowRedirectType,
   parseRedirect,
+  redirectTypes,
   HostnameRedirect,
   Redirect,
   Redirects,
@@ -92,4 +96,11 @@ test('Redirect.isMatch', (t) => {
       t.is(redirect.isMatch(new URL(sample)), expected);
     }
   }
+});
+
+test('Narrow match & redirect types', (t) => {
+  t.false(narrowMatchType('invalid'));
+  t.false(narrowRedirectType('invalid'));
+  t.true(matcherTypes.every((type) => narrowMatchType(type)));
+  t.true(redirectTypes.every((type) => narrowRedirectType(type)));
 });
