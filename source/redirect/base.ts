@@ -33,4 +33,8 @@ export abstract class Redirect<P extends RedirectParameters> {
   }
 
   public abstract redirect(url: URL | string): URL;
+
+  public abstract get redirectValue(): string;
+
+  public abstract set redirectValue(value: string);
 }

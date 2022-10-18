@@ -11,4 +11,12 @@ export class HostnameRedirect extends Redirect<HostnameParameters> {
     redirected.hostname = this.parameters.hostname;
     return redirected;
   }
+
+  public get redirectValue(): string {
+    return this.parameters.hostname;
+  }
+
+  public set redirectValue(value: string) {
+    this.parameters.hostname = value;
+  }
 }

@@ -9,4 +9,12 @@ export class SimpleRedirect extends Redirect<SimpleParameters> {
   public redirect(): URL {
     return new URL(this.parameters.target);
   }
+
+  public get redirectValue(): string {
+    return this.parameters.target;
+  }
+
+  public set redirectValue(value: string) {
+    this.parameters.target = value;
+  }
 }
