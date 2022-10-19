@@ -4,7 +4,7 @@ export const redirectTypes = ['hostname', 'simple'] as const;
 export type MatcherType = typeof matcherTypes[number];
 export type RedirectType = typeof redirectTypes[number];
 
-export function narrowMatchType(value: string): value is MatcherType {
+export function narrowMatcherType(value: string): value is MatcherType {
   return matcherTypes.includes(value as MatcherType);
 }
 

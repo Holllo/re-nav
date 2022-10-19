@@ -4,7 +4,7 @@ import test from 'ava';
 
 import {
   matcherTypes,
-  narrowMatchType,
+  narrowMatcherType,
   narrowRedirectType,
   parseRedirect,
   redirectTypes,
@@ -99,9 +99,9 @@ test('Redirect.isMatch', (t) => {
 });
 
 test('Narrow match & redirect types', (t) => {
-  t.false(narrowMatchType('invalid'));
+  t.false(narrowMatcherType('invalid'));
   t.false(narrowRedirectType('invalid'));
-  t.true(matcherTypes.every((value) => narrowMatchType(value)));
+  t.true(matcherTypes.every((value) => narrowMatcherType(value)));
   t.true(redirectTypes.every((value) => narrowRedirectType(value)));
 });
 
