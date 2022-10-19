@@ -9,14 +9,15 @@ export type Redirects = HostnameRedirect | SimpleRedirect;
 
 export function parseRedirect<P extends Redirects['parameters']>(
   parameters: P,
+  id: string,
 ): Redirects | undefined {
   const redirectType = parameters?.redirectType;
 
   if (redirectType === 'hostname') {
-    return new HostnameRedirect(parameters);
+    return new HostnameRedirect(parameters, id);
   }
 
   if (redirectType === 'simple') {
-    return new SimpleRedirect(parameters);
+    return new SimpleRedirect(parameters, id);
   }
 }

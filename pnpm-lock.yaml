@@ -10,6 +10,7 @@ specifiers:
   c8: ^7.12.0
   htm: ^3.1.1
   modern-normalize: ^1.1.0
+  nanoid: ^4.0.0
   postcss: ^8.4.16
   preact: ^10.11.0
   sass: ^1.55.0
@@ -29,6 +30,7 @@ dependencies:
   '@holllo/preact-components': 0.2.3_htm@3.1.1+preact@10.11.0
   htm: 3.1.1
   modern-normalize: 1.1.0
+  nanoid: 4.0.0
   preact: 10.11.0
   webextension-polyfill: 0.10.0
 
@@ -5197,6 +5199,12 @@ packages:
     hasBin: true
     dev: true
 
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
+
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
@@ -7637,6 +7645,11 @@ packages:
     resolution: {integrity: sha512-liCEteZ5z+QRyh3XzsYWQyxedBHBvx8CDlNvvi+BJz74L0E5/ID2v7JtoX3bD541AlMuOy4e/iWif6hhNGBFNw==}
     engines: {node: '>=12.20'}
     hasBin: true
+    peerDependencies:
+      webpack: '>=1.11.0'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       '@eslint/eslintrc': 1.3.2
       '@typescript-eslint/eslint-plugin': 5.36.2_q7mrctxvxoqtj4jpjqmbsyg2qy
@@ -7677,7 +7690,6 @@ packages:
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - supports-color
-      - webpack
     dev: true
     bundledDependencies:
       - '@typescript-eslint/eslint-plugin'

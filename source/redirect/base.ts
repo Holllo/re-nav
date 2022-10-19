@@ -1,3 +1,5 @@
+import {customAlphabet} from 'nanoid';
+
 export const matcherTypes = ['hostname'] as const;
 export const redirectTypes = ['hostname', 'simple'] as const;
 
@@ -22,7 +24,17 @@ export type RedirectParameters = {
 };
 
 export abstract class Redirect<P extends RedirectParameters> {
-  constructor(public parameters: P & Matcher) {}
+  public static generateId(): string {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const nanoid = customAlphabet(`${alphabet}${alphabet.toUpperCase()}`, 20);
+    return nanoid();
+  }
+
+  public id: string;
+
+  constructor(public parameters: P & Matcher, id?: string) {
+    this.id = id ?? Redirect.generateId();
+  }
 
   public isMatch(url: URL): boolean {
     if (this.parameters.matcherType === 'hostname') {

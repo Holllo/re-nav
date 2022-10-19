@@ -40,11 +40,13 @@ test('parseRedirect', (t) => {
   ];
 
   for (const sample of samples) {
-    const redirect = parseRedirect(sample);
+    const redirect = parseRedirect(sample, Redirect.generateId());
 
     if (redirect === undefined) {
       t.pass('parseRedirect returned undefined');
     } else {
+      t.regex(redirect.id, /^[a-z]{20}$/i);
+      redirect.id = 'id';
       t.snapshot(redirect, `Class ${redirect.constructor.name}`);
     }
   }

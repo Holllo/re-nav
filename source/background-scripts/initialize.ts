@@ -21,8 +21,10 @@ browser.runtime.onInstalled.addListener(async () => {
 browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
   const url = new URL(details.url);
 
-  for (const parameters of Object.values(await browser.storage.local.get())) {
-    const redirect = parseRedirect(parameters);
+  for (const [id, parameters] of Object.entries(
+    await browser.storage.local.get(),
+  )) {
+    const redirect = parseRedirect(parameters, id);
     if (redirect === undefined) {
       continue;
     }
