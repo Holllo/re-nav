@@ -1,6 +1,6 @@
 import {customAlphabet} from 'nanoid';
 
-export const matcherTypes = ['hostname'] as const;
+export const matcherTypes = ['hostname', 'regex'] as const;
 export const redirectTypes = ['hostname', 'simple'] as const;
 
 export type MatcherType = typeof matcherTypes[number];
@@ -40,6 +40,11 @@ export abstract class Redirect {
         ? url.hostname.slice(4)
         : url.hostname;
       return hostname === this.parameters.matcherValue;
+    }
+
+    if (this.parameters.matcherType === 'regex') {
+      const regex = new RegExp(this.parameters.matcherValue, 'gi');
+      return regex.test(url.href);
     }
 
     return false;
