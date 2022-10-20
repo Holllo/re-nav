@@ -88,14 +88,27 @@ test('Redirect.isMatch', (t) => {
     test: 'invalid',
   } as unknown as HostnameRedirect['parameters']);
 
+  const regexMatch = new HostnameRedirect({
+    matcherType: 'regex',
+    matcherValue: String.raw`^https://(www\.)?example.org/$`,
+    redirectType: 'simple',
+    redirectValue: '',
+  });
+  const regexSamples: UrlSamples = [
+    ['https://example.org', true],
+    ['https://www.example.org', true],
+    ['https://example.org/path', false],
+  ];
+
   const samples: Array<[Redirects, UrlSamples]> = [
     [invalidRedirect, [['https://example.org', false]]],
     [hostnameRedirect, hostnameSamples],
+    [regexMatch, regexSamples],
   ];
 
   for (const [redirect, urlSamples] of samples) {
     for (const [sample, expected] of urlSamples) {
-      t.is(redirect.isMatch(new URL(sample)), expected);
+      t.is(redirect.isMatch(new URL(sample)), expected, `Sample ${sample}`);
     }
   }
 });
