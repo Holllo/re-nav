@@ -15,26 +15,26 @@ import {
   SimpleRedirect,
 } from '../source/redirect/exports.js';
 
-const hostnameParameters: HostnameRedirect['parameters'] = {
-  hostname: 'example.org',
+const hostnameParameters: RedirectParameters = {
   matcherType: 'hostname',
-  toMatch: 'example.com',
+  matcherValue: 'example.com',
   redirectType: 'hostname',
+  redirectValue: 'example.org',
 };
 
-const simpleParameters: SimpleRedirect['parameters'] = {
+const simpleParameters: RedirectParameters = {
   matcherType: 'hostname',
-  target: 'https://example.org/simple',
-  toMatch: 'example.com',
+  matcherValue: 'example.com',
   redirectType: 'simple',
+  redirectValue: 'https://example.org/simple',
 };
 
 test('parseRedirect', (t) => {
-  const samples: Array<Redirects['parameters']> = [
+  const samples: RedirectParameters[] = [
     {
       test: 'Invalid parameters',
-    } as unknown as Redirects['parameters'],
-    undefined as unknown as Redirects['parameters'],
+    } as unknown as RedirectParameters,
+    undefined as unknown as RedirectParameters,
     hostnameParameters,
     simpleParameters,
   ];
@@ -56,7 +56,7 @@ test('Redirect.redirect', (t) => {
   const hostnameRedirect = new HostnameRedirect(hostnameParameters);
   const simpleRedirect = new SimpleRedirect(simpleParameters);
 
-  const samples: Array<[string, Redirect<RedirectParameters>]> = [
+  const samples: Array<[string, Redirect]> = [
     ['https://example.com', hostnameRedirect],
     ['https://example.com/path#hash?query=test', hostnameRedirect],
     ['https://example.com', simpleRedirect],
@@ -105,18 +105,4 @@ test('Narrow match & redirect types', (t) => {
   t.false(narrowRedirectType('invalid'));
   t.true(matcherTypes.every((value) => narrowMatcherType(value)));
   t.true(redirectTypes.every((value) => narrowRedirectType(value)));
-});
-
-test('Redirect getters & setters', (t) => {
-  const samples: Array<[Redirects, string]> = [
-    [new HostnameRedirect(hostnameParameters), hostnameParameters.hostname],
-    [new SimpleRedirect(simpleParameters), simpleParameters.target],
-  ];
-
-  for (const [redirect, value] of samples) {
-    t.is(redirect.redirectValue, value);
-    const newValue = `${value} test`;
-    redirect.redirectValue = newValue;
-    t.is(redirect.redirectValue, newValue);
-  }
 });

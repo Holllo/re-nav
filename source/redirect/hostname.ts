@@ -1,22 +1,9 @@
 import {Redirect} from './base.js';
 
-export type HostnameParameters = {
-  hostname: string;
-  redirectType: 'hostname';
-};
-
-export class HostnameRedirect extends Redirect<HostnameParameters> {
+export class HostnameRedirect extends Redirect {
   public redirect(url: URL | string): URL {
     const redirected = new URL(url);
-    redirected.hostname = this.parameters.hostname;
+    redirected.hostname = this.parameters.redirectValue;
     return redirected;
-  }
-
-  public get redirectValue(): string {
-    return this.parameters.hostname;
-  }
-
-  public set redirectValue(value: string) {
-    this.parameters.hostname = value;
   }
 }

@@ -14,16 +14,14 @@ export function narrowRedirectType(value: string): value is RedirectType {
   return redirectTypes.includes(value as RedirectType);
 }
 
-export type Matcher = {
-  matcherType: MatcherType;
-  toMatch: string;
-};
-
 export type RedirectParameters = {
+  matcherType: MatcherType;
+  matcherValue: string;
   redirectType: RedirectType;
+  redirectValue: string;
 };
 
-export abstract class Redirect<P extends RedirectParameters> {
+export abstract class Redirect {
   public static generateId(): string {
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     const nanoid = customAlphabet(`${alphabet}${alphabet.toUpperCase()}`, 20);
@@ -32,7 +30,7 @@ export abstract class Redirect<P extends RedirectParameters> {
 
   public id: string;
 
-  constructor(public parameters: P & Matcher, id?: string) {
+  constructor(public parameters: RedirectParameters, id?: string) {
     this.id = id ?? Redirect.generateId();
   }
 
@@ -41,15 +39,11 @@ export abstract class Redirect<P extends RedirectParameters> {
       const hostname = url.hostname.startsWith('www.')
         ? url.hostname.slice(4)
         : url.hostname;
-      return hostname === this.parameters.toMatch;
+      return hostname === this.parameters.matcherValue;
     }
 
     return false;
   }
 
   public abstract redirect(url: URL | string): URL;
-
-  public abstract get redirectValue(): string;
-
-  public abstract set redirectValue(value: string);
 }

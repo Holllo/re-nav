@@ -1,3 +1,4 @@
+import {RedirectParameters} from './base.js';
 import {HostnameRedirect} from './hostname.js';
 import {SimpleRedirect} from './simple.js';
 
@@ -7,8 +8,8 @@ export * from './simple.js';
 
 export type Redirects = HostnameRedirect | SimpleRedirect;
 
-export function parseRedirect<P extends Redirects['parameters']>(
-  parameters: P,
+export function parseRedirect(
+  parameters: RedirectParameters,
   id: string,
 ): Redirects | undefined {
   const redirectType = parameters?.redirectType;
