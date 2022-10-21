@@ -19,7 +19,17 @@ browser.runtime.onInstalled.addListener(async () => {
 });
 
 browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
+  const {latestTime} = await browser.storage.local.get('latestTime');
+  const redirectDelta = Date.now() - (latestTime ?? 0);
+  if (redirectDelta < 100) {
+    return;
+  }
+
   const url = new URL(details.url);
+  const {latestUrl} = await browser.storage.local.get('latestUrl');
+  if (redirectDelta < 30_000 && url.href === latestUrl) {
+    return;
+  }
 
   for (const [id, parameters] of Object.entries(
     await browser.storage.local.get(),
@@ -32,6 +42,10 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
     if (redirect.isMatch(url)) {
       const redirectedUrl = redirect.redirect(url);
       await browser.tabs.update({url: redirectedUrl.href});
+      await browser.storage.local.set({
+        latestTime: Date.now(),
+        latestUrl: url.href,
+      });
       break;
     }
   }
