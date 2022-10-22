@@ -19,6 +19,10 @@ browser.runtime.onInstalled.addListener(async () => {
 });
 
 browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
+  if (!details.url.startsWith('http')) {
+    return;
+  }
+
   const {latestTime} = await browser.storage.local.get('latestTime');
   const redirectDelta = Date.now() - (latestTime ?? 0);
   if (redirectDelta < 100) {
