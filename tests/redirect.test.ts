@@ -16,6 +16,7 @@ import {
 } from '../source/redirect/exports.js';
 
 const hostnameParameters: RedirectParameters = {
+  enabled: true,
   matcherType: 'hostname',
   matcherValue: 'example.com',
   redirectType: 'hostname',
@@ -23,6 +24,7 @@ const hostnameParameters: RedirectParameters = {
 };
 
 const simpleParameters: RedirectParameters = {
+  enabled: true,
   matcherType: 'hostname',
   matcherValue: 'example.com',
   redirectType: 'simple',
@@ -89,6 +91,7 @@ test('Redirect.isMatch', (t) => {
   } as unknown as HostnameRedirect['parameters']);
 
   const regexMatch = new HostnameRedirect({
+    enabled: true,
     matcherType: 'regex',
     matcherValue: String.raw`^https://(www\.)?example.org/$`,
     redirectType: 'simple',
