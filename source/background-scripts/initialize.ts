@@ -45,7 +45,7 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
 
     if (redirect.isMatch(url)) {
       const redirectedUrl = redirect.redirect(url);
-      await browser.tabs.update({url: redirectedUrl.href});
+      await browser.tabs.update(details.tabId, {url: redirectedUrl.href});
       await browser.storage.local.set({
         latestTime: Date.now(),
         latestUrl: url.href,
