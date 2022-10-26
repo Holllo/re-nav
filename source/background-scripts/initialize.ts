@@ -39,7 +39,7 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
     await browser.storage.local.get(),
   )) {
     const redirect = parseRedirect(parameters, id);
-    if (redirect === undefined) {
+    if (redirect === undefined || !redirect.parameters.enabled) {
       continue;
     }
 

@@ -15,6 +15,7 @@ export function narrowRedirectType(value: string): value is RedirectType {
 }
 
 export type RedirectParameters = {
+  enabled: boolean;
   matcherType: MatcherType;
   matcherValue: string;
   redirectType: RedirectType;
