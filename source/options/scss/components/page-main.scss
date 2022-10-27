@@ -1,0 +1,38 @@
+@use '../mixins';
+
+.page-main {
+  @include mixins.responsive-container;
+
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  .button {
+    background-color: var(--da-3);
+    border: none;
+    color: var(--db-1);
+    cursor: pointer;
+    font-weight: bold;
+
+    &.destructive {
+      background-color: var(--da-1);
+    }
+
+    &.new-redirect {
+      background-color: var(--da-4);
+      padding: 8px;
+      width: fit-content;
+    }
+
+    &:hover {
+      background-color: var(--df-2);
+    }
+  }
+
+  .editors {
+    border: 1px solid var(--df-2);
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+  }
+}

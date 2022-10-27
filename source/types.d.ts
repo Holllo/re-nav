@@ -16,5 +16,11 @@ declare global {
     readonly VITE_BROWSER: 'chromium' | 'firefox';
   }
 
+  interface Window {
+    Holllo: {
+      insertExamples(): Promise<void>;
+    };
+  }
+
   type HtmComponent = ReturnType<typeof html>;
 }

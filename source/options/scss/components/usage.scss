@@ -1,0 +1,95 @@
+.usage {
+  border: 1px solid var(--df-2);
+
+  &[open] {
+    summary {
+      background-color: var(--df-2);
+      color: var(--db-1);
+    }
+
+    &:not(.table) summary {
+      margin-bottom: 16px;
+    }
+
+    > :not(summary) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 16px;
+
+    &:hover {
+      background-color: var(--df-1);
+      color: var(--db-1);
+    }
+  }
+
+  ul {
+    list-style: square;
+    margin: 4px 0 2rem 16px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--df-2);
+    }
+  }
+
+  th {
+    border-bottom: 1px solid var(--df-2);
+    padding: 8px;
+  }
+
+  td,
+  th {
+    &:not(:last-child) {
+      border-right: 1px solid var(--df-2);
+    }
+  }
+
+  tr {
+    &.alt {
+      background-color: var(--db-2);
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--df-2);
+    }
+
+    td {
+      padding: 4px;
+
+      b {
+        color: var(--da-3);
+      }
+    }
+  }
+
+  .footnotes {
+    margin-left: 12px;
+    padding: 8px;
+
+    code {
+      background-color: var(--db-2);
+    }
+
+    li {
+      margin-bottom: 4px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .button {
+    padding: 4px;
+  }
+}

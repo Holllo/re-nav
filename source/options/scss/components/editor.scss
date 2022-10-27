@@ -1,0 +1,54 @@
+.editor {
+  align-items: center;
+  background-color: var(--db-2);
+  display: flex;
+  padding: 8px;
+
+  .arrow-span {
+    aspect-ratio: 1;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    font-weight: bold;
+    justify-content: center;
+  }
+
+  .button {
+    aspect-ratio: 1;
+    height: 100%;
+    margin-left: 8px;
+    padding: 0;
+
+    &.enabled {
+      background-color: var(--da-4);
+    }
+
+    &.disabled {
+      background-color: var(--da-2);
+    }
+  }
+
+  .input {
+    background-color: var(--db-1);
+    border: 1px solid var(--df-2);
+    color: var(--df-1);
+    height: 100%;
+    padding: 4px;
+    width: 100%;
+  }
+
+  .select {
+    appearance: none;
+    background: url('../../../assets/down-arrow.svg') no-repeat center right;
+    background-size: 1.5rem;
+    background-color: var(--db-1);
+    border: 1px solid var(--df-2);
+    border-radius: 0;
+    color: var(--df-1);
+    cursor: pointer;
+    height: 100%;
+    margin-right: 8px;
+    padding: 4px 24px 4px 4px;
+    width: fit-content;
+  }
+}
