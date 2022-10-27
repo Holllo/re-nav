@@ -74,7 +74,14 @@ export default class Editor extends Component<Props, State> {
   };
 
   parseRedirect = (): Redirect => {
-    const redirect = parseRedirect(this.state);
+    const redirect = parseRedirect({
+      enabled: this.state.enabled,
+      id: this.state.id,
+      matcherType: this.state.matcherType,
+      matcherValue: this.state.matcherValue,
+      redirectType: this.state.redirectType,
+      redirectValue: this.state.redirectValue,
+    });
     if (redirect === undefined) {
       throw new Error('Failed to parse redirect');
     }
