@@ -20,13 +20,16 @@ type Props = {
   saveRedirect: (redirect: Redirect) => void;
 };
 
-type State = RedirectParameters;
+type State = {
+  hasBeenEdited: boolean;
+} & RedirectParameters;
 
 export default class Editor extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
     this.state = {
+      hasBeenEdited: false,
       ...props.redirect.parameters,
     };
   }
@@ -34,27 +37,37 @@ export default class Editor extends Component<Props, State> {
   onInput = (event: Event, input: 'matcher' | 'redirect') => {
     const target = event.target as HTMLInputElement;
     const value = target.value;
+    const newState: Partial<State> = {
+      hasBeenEdited: true,
+    };
 
     if (input === 'matcher') {
-      this.setState({matcherValue: value});
+      newState.matcherValue = value;
     } else if (input === 'redirect') {
-      this.setState({redirectValue: value});
+      newState.redirectValue = value;
     } else {
       throw new Error(`Unexpected input changed: ${input as string}`);
     }
+
+    this.setState(newState);
   };
 
   onSelectChange = (event: Event, select: 'matcher' | 'redirect') => {
     const target = event.target as HTMLSelectElement;
     const value = target.value;
+    const newState: Partial<State> = {
+      hasBeenEdited: true,
+    };
 
     if (select === 'matcher' && narrowMatcherType(value)) {
-      this.setState({matcherType: value});
+      newState.matcherType = value;
     } else if (select === 'redirect' && narrowRedirectType(value)) {
-      this.setState({redirectType: value});
+      newState.redirectType = value;
     } else {
       throw new Error(`${value} is not a valid MatcherType or RedirectType`);
     }
+
+    this.setState(newState);
   };
 
   onMatcherInput = (event: Event) => {
@@ -99,6 +112,7 @@ export default class Editor extends Component<Props, State> {
     const redirect = this.parseRedirect();
     await storage.save(redirect);
     this.props.saveRedirect(redirect);
+    this.setState({hasBeenEdited: false});
   };
 
   toggleEnabled = async () => {
@@ -111,8 +125,14 @@ export default class Editor extends Component<Props, State> {
   };
 
   render() {
-    const {enabled, matcherType, matcherValue, redirectType, redirectValue} =
-      this.state;
+    const {
+      enabled,
+      hasBeenEdited,
+      matcherType,
+      matcherValue,
+      redirectType,
+      redirectValue,
+    } = this.state;
 
     const matcherTypeOptions = matcherTypes.map(
       (value) => html`<option value=${value}>${value}</option>`,
@@ -122,7 +142,7 @@ export default class Editor extends Component<Props, State> {
     );
 
     return html`
-      <div class="editor">
+      <div class="editor ${hasBeenEdited ? 'has-been-edited' : ''}">
         <select
           class="select"
           id="matcher-type"

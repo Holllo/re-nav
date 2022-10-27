@@ -31,6 +31,10 @@ export default class Usage extends Component {
         <p>Editing redirects:</p>
         <ul>
           <li>
+            If a redirect has been edited, a yellow border will be shown around
+            it.
+          </li>
+          <li>
             Changes to redirects are only saved when you click the save button.
           </li>
           <li>

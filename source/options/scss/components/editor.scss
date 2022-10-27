@@ -1,8 +1,13 @@
 .editor {
   align-items: center;
   background-color: var(--db-2);
+  border: 1px solid transparent;
   display: flex;
   padding: 8px;
+
+  &.has-been-edited {
+    border: 1px solid var(--da-3);
+  }
 
   .arrow-span {
     aspect-ratio: 1;
