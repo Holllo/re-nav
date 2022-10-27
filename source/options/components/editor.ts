@@ -8,40 +8,26 @@ import {
   narrowMatcherType,
   narrowRedirectType,
   parseRedirect,
-  Redirects,
+  Redirect,
   RedirectParameters,
   redirectTypes,
 } from '../../redirect/exports.js';
+import storage from '../../redirect/storage.js';
 
 type Props = {
-  id: string;
-  redirect?: Redirects;
-  removeRedirect: (id: string) => void;
-  saveRedirect: (redirect: Redirects) => void;
+  redirect: Redirect;
+  removeRedirect: (id: number) => void;
+  saveRedirect: (redirect: Redirect) => void;
 };
 
-type State = {
-  id: string;
-  redirectValue: string;
-} & RedirectParameters;
+type State = RedirectParameters;
 
 export default class Editor extends Component<Props, State> {
-  defaultParameters: RedirectParameters;
-
   constructor(props: Props) {
     super(props);
 
-    this.defaultParameters = {
-      enabled: true,
-      matcherType: 'hostname',
-      matcherValue: '',
-      redirectType: 'simple',
-      redirectValue: '',
-    };
-
     this.state = {
-      id: this.props.id,
-      ...this.parametersFromProps(),
+      ...props.redirect.parameters,
     };
   }
 
@@ -87,21 +73,8 @@ export default class Editor extends Component<Props, State> {
     this.onSelectChange(event, 'redirect');
   };
 
-  parametersFromProps = (): RedirectParameters => {
-    const redirect = this.props.redirect;
-    const parameters = redirect?.parameters ?? {...this.defaultParameters};
-
-    return {
-      enabled: parameters.enabled,
-      matcherType: parameters.matcherType,
-      matcherValue: parameters.matcherValue,
-      redirectType: parameters.redirectType,
-      redirectValue: parameters.redirectValue,
-    };
-  };
-
-  parseRedirect = (): Redirects => {
-    const redirect = parseRedirect(this.state, this.props.id);
+  parseRedirect = (): Redirect => {
+    const redirect = parseRedirect(this.state);
     if (redirect === undefined) {
       throw new Error('Failed to parse redirect');
     }
@@ -109,32 +82,24 @@ export default class Editor extends Component<Props, State> {
     return redirect;
   };
 
-  prepareForStorage = (
-    parameters: RedirectParameters,
-  ): Record<string, RedirectParameters> => {
-    const storage: Record<string, RedirectParameters> = {};
-    storage[this.props.id] = parameters;
-    return storage;
-  };
-
   remove = async () => {
-    await browser.storage.local.remove(this.props.id);
-    this.props.removeRedirect(this.props.id);
+    const redirect = this.props.redirect;
+    await browser.storage.local.remove(redirect.idString());
+    this.props.removeRedirect(redirect.parameters.id);
   };
 
   save = async () => {
     const redirect = this.parseRedirect();
-    await browser.storage.local.set(
-      this.prepareForStorage(redirect.parameters),
-    );
+    await storage.save(redirect);
     this.props.saveRedirect(redirect);
   };
 
   toggleEnabled = async () => {
     const enabled = !this.state.enabled;
-    const storage = this.prepareForStorage(this.parametersFromProps());
-    storage[this.props.id].enabled = enabled;
-    await browser.storage.local.set(storage);
+    const redirect = this.props.redirect;
+    const prepared = await storage.prepareForStorage(redirect);
+    prepared[redirect.idString()].enabled = enabled;
+    await browser.storage.local.set(prepared);
     this.setState({enabled});
   };
 

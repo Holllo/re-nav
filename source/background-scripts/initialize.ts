@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 
-import {parseRedirect} from '../redirect/exports.js';
+import storage from '../redirect/storage.js';
 
 async function browserActionClicked() {
   await browser.runtime.openOptionsPage();
@@ -35,11 +35,8 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
     return;
   }
 
-  for (const [id, parameters] of Object.entries(
-    await browser.storage.local.get(),
-  )) {
-    const redirect = parseRedirect(parameters, id);
-    if (redirect === undefined || !redirect.parameters.enabled) {
+  for (const redirect of await storage.getRedirects()) {
+    if (!redirect.parameters.enabled) {
       continue;
     }
 

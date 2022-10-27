@@ -1,5 +1,3 @@
-import {customAlphabet} from 'nanoid';
-
 export const matcherTypes = ['hostname', 'regex'] as const;
 export const redirectTypes = ['hostname', 'simple'] as const;
 
@@ -16,6 +14,7 @@ export function narrowRedirectType(value: string): value is RedirectType {
 
 export type RedirectParameters = {
   enabled: boolean;
+  id: number;
   matcherType: MatcherType;
   matcherValue: string;
   redirectType: RedirectType;
@@ -23,16 +22,14 @@ export type RedirectParameters = {
 };
 
 export abstract class Redirect {
-  public static generateId(): string {
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    const nanoid = customAlphabet(`${alphabet}${alphabet.toUpperCase()}`, 20);
-    return nanoid();
+  public static idString(id: number): string {
+    return `redirect:${id}`;
   }
 
-  public id: string;
+  constructor(public parameters: RedirectParameters) {}
 
-  constructor(public parameters: RedirectParameters, id?: string) {
-    this.id = id ?? Redirect.generateId();
+  public idString(): string {
+    return Redirect.idString(this.parameters.id);
   }
 
   public isMatch(url: URL): boolean {

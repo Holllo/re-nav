@@ -1,7 +1,7 @@
 import {html} from 'htm/preact';
 import {Component, render} from 'preact';
-import browser from 'webextension-polyfill';
 
+import storage from '../redirect/storage.js';
 import {PageFooter} from './components/page-footer.js';
 import {PageHeader} from './components/page-header.js';
 import {PageMain} from './components/page-main.js';
@@ -10,7 +10,7 @@ import {generateExamples} from './examples.js';
 window.addEventListener('DOMContentLoaded', () => {
   window.Holllo = {
     async insertExamples() {
-      await browser.storage.local.set(generateExamples());
+      await storage.savePrepared(await generateExamples());
       location.reload();
     },
   };

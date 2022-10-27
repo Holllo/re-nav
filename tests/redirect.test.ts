@@ -17,6 +17,7 @@ import {
 
 const hostnameParameters: RedirectParameters = {
   enabled: true,
+  id: 1,
   matcherType: 'hostname',
   matcherValue: 'example.com',
   redirectType: 'hostname',
@@ -25,6 +26,7 @@ const hostnameParameters: RedirectParameters = {
 
 const simpleParameters: RedirectParameters = {
   enabled: true,
+  id: 2,
   matcherType: 'hostname',
   matcherValue: 'example.com',
   redirectType: 'simple',
@@ -42,13 +44,12 @@ test('parseRedirect', (t) => {
   ];
 
   for (const sample of samples) {
-    const redirect = parseRedirect(sample, Redirect.generateId());
+    const redirect = parseRedirect(sample);
 
     if (redirect === undefined) {
       t.pass('parseRedirect returned undefined');
     } else {
-      t.regex(redirect.id, /^[a-z]{20}$/i);
-      redirect.id = 'id';
+      t.regex(redirect?.idString(), /^redirect:\d+$/i);
       t.snapshot(redirect, `Class ${redirect.constructor.name}`);
     }
   }
@@ -92,6 +93,7 @@ test('Redirect.isMatch', (t) => {
 
   const regexMatch = new HostnameRedirect({
     enabled: true,
+    id: 3,
     matcherType: 'regex',
     matcherValue: String.raw`^https://(www\.)?example.org/$`,
     redirectType: 'simple',

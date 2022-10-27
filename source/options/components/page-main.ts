@@ -1,13 +1,8 @@
 import {html} from 'htm/preact';
 import {Component} from 'preact';
-import browser from 'webextension-polyfill';
 
-import {
-  parseRedirect,
-  Redirect,
-  Redirects,
-  SimpleRedirect,
-} from '../../redirect/exports.js';
+import {Redirect, SimpleRedirect} from '../../redirect/exports.js';
+import storage from '../../redirect/storage.js';
 
 import Editor from './editor.js';
 import Usage from './usage.js';
@@ -15,7 +10,7 @@ import Usage from './usage.js';
 type Props = Record<string, unknown>;
 
 type State = {
-  redirects: Redirects[];
+  redirects: Redirect[];
 };
 
 export class PageMain extends Component<Props, State> {
@@ -28,17 +23,7 @@ export class PageMain extends Component<Props, State> {
   }
 
   async componentDidMount() {
-    const redirects: Redirects[] = [];
-    for (const [id, parameters] of Object.entries(
-      await browser.storage.local.get(),
-    )) {
-      const redirect = parseRedirect(parameters, id);
-      if (redirect === undefined) {
-        continue;
-      }
-
-      redirects.push(redirect);
-    }
+    const redirects = await storage.getRedirects();
 
     // Sort the redirects by:
     // * Matcher Type
@@ -73,33 +58,36 @@ export class PageMain extends Component<Props, State> {
 
       return rValueA.localeCompare(rValueB);
     });
+
     this.setState({redirects});
   }
 
-  addNewRedirect = () => {
+  addNewRedirect = async () => {
+    const redirect = new SimpleRedirect({
+      enabled: true,
+      id: await storage.nextRedirectId(),
+      matcherType: 'hostname',
+      matcherValue: 'example.com',
+      redirectType: 'simple',
+      redirectValue: 'example.org',
+    });
+    await storage.savePrepared(await storage.prepareForStorage(redirect));
     this.setState({
-      redirects: [
-        new SimpleRedirect({
-          enabled: true,
-          matcherType: 'hostname',
-          matcherValue: 'example.com',
-          redirectType: 'simple',
-          redirectValue: 'example.org',
-        }),
-        ...this.state.redirects,
-      ],
+      redirects: [redirect, ...this.state.redirects],
     });
   };
 
-  removeRedirect = (id: string) => {
+  removeRedirect = (id: number) => {
     this.setState({
-      redirects: this.state.redirects.filter((redirect) => redirect.id !== id),
+      redirects: this.state.redirects.filter(
+        (redirect) => redirect.parameters.id !== id,
+      ),
     });
   };
 
-  saveRedirect = (redirect: Redirects) => {
+  saveRedirect = (redirect: Redirect) => {
     const redirectIndex = this.state.redirects.findIndex(
-      (found) => found.id === redirect.id,
+      (found) => found.parameters.id === redirect.parameters.id,
     );
     if (redirectIndex === -1) {
       this.setState({
@@ -117,18 +105,13 @@ export class PageMain extends Component<Props, State> {
       (redirect) =>
         html`
           <${Editor}
-            key=${redirect.id}
-            id=${redirect.id}
+            key=${redirect.idString()}
             redirect=${redirect}
             removeRedirect=${this.removeRedirect}
             saveRedirect=${this.saveRedirect}
           />
         `,
     );
-
-    if (editors.length === 0) {
-      this.addNewRedirect();
-    }
 
     return html`
       <main class="page-main">
