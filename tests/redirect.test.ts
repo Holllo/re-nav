@@ -12,6 +12,7 @@ import {
   Redirect,
   Redirects,
   RedirectParameters,
+  RegexRedirect,
   SimpleRedirect,
 } from '../source/redirect/exports.js';
 
@@ -33,6 +34,15 @@ const simpleParameters: RedirectParameters = {
   redirectValue: 'https://example.org/simple',
 };
 
+const regexParameters: RedirectParameters = {
+  enabled: true,
+  id: 3,
+  matcherType: 'regex',
+  matcherValue: '(.+)\\.com',
+  redirectType: 'regex',
+  redirectValue: '$1.org',
+};
+
 test('parseRedirect', (t) => {
   const samples: RedirectParameters[] = [
     {
@@ -41,6 +51,7 @@ test('parseRedirect', (t) => {
     undefined as unknown as RedirectParameters,
     hostnameParameters,
     simpleParameters,
+    regexParameters,
   ];
 
   for (const sample of samples) {
@@ -58,18 +69,21 @@ test('parseRedirect', (t) => {
 test('Redirect.redirect', (t) => {
   const hostnameRedirect = new HostnameRedirect(hostnameParameters);
   const simpleRedirect = new SimpleRedirect(simpleParameters);
+  const regexRedirect = new RegexRedirect(regexParameters);
 
-  const samples: Array<[string, Redirect]> = [
+  const samples: Array<[string | URL, Redirect]> = [
     ['https://example.com', hostnameRedirect],
     ['https://example.com/path#hash?query=test', hostnameRedirect],
     ['https://example.com', simpleRedirect],
     ['https://example.com/path', simpleRedirect],
+    ['https://example.com', regexRedirect],
+    [new URL('https://example.com'), regexRedirect],
   ];
 
   for (const [index, [url, redirect]] of samples.entries()) {
     t.snapshot(
       {
-        original: url,
+        original: url instanceof URL ? url.href : url,
         redirected: redirect.redirect(url).href,
       },
       `${index} ${redirect.constructor.name}`,

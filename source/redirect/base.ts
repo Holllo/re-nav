@@ -1,5 +1,5 @@
 export const matcherTypes = ['hostname', 'regex'] as const;
-export const redirectTypes = ['hostname', 'simple'] as const;
+export const redirectTypes = ['hostname', 'regex', 'simple'] as const;
 
 export type MatcherType = typeof matcherTypes[number];
 export type RedirectType = typeof redirectTypes[number];
