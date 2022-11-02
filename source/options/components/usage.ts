@@ -95,13 +95,19 @@ export default class Usage extends Component {
               <td>https://<b>tildes.net</b>/~creative.timasomo</td>
             </tr>
             <tr class="alt">
-              <td class="bold center-text" rowspan="2">Regex</td>
+              <td class="bold center-text" rowspan="3">Regex</td>
               <td class="center-text">HOL{3}O</td>
               <td>https://git.bauke.xyz/<b>holllo</b><sup>2</sup></td>
             </tr>
             <tr class="alt">
               <td class="center-text">^https?://www\\.holllo\\.org/?$</td>
               <td><b>https://www.holllo.org/</b></td>
+            </tr>
+            <tr>
+              <td class="center-text">
+                ${'^(?<base>https://holllo\\.org)/(?<one>1)-(?<two>2)$'}
+              </td>
+              <td><b>https://holllo.org/1-2</b></td>
             </tr>
           </tbody>
         </table>
@@ -149,11 +155,21 @@ export default class Usage extends Component {
               <td>https://holllo.org/home</td>
               <td><b>https://holllo.org</b></td>
             </tr>
+            <tr>
+              <td class="bold center-text">Regex<sup>2</sup></td>
+              <td>${'$<base>/$<two>-$<one>'}</td>
+              <td>https://holllo.org/1-2</td>
+              <td><b>https://holllo.org/2-1</b></td>
+            </tr>
           </tbody>
         </table>
 
         <ol class="footnotes">
           <li>The bold highlighted text shows what will be changed.</li>
+          <li>
+            The regex redirect only works in combination with the regex matcher,
+            as the regex matcher will be used for the capturing groups.
+          </li>
         </ol>
       </details>
     `;

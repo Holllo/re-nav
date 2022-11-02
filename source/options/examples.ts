@@ -28,6 +28,14 @@ const examples: RedirectParameters[] = [
     redirectType: 'simple',
     redirectValue: 'https://holllo.org/re-nav',
   },
+  {
+    enabled: true,
+    id: -1,
+    matcherType: 'regex',
+    matcherValue: '^(?<base>https://holllo\\.org)/(?<one>1)-(?<two>2)$',
+    redirectType: 'regex',
+    redirectValue: '$<base>/$<two>-$<one>',
+  },
 ];
 
 export async function generateExamples(): Promise<
