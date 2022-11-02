@@ -4,7 +4,7 @@ export default function createManifest(
   target: string,
 ): Record<string, unknown> {
   const manifest: Record<string, unknown> = {
-    name: 're-nav',
+    name: 'Re-Nav',
     description: 'Navigation redirects for the masses.',
     version: '0.1.0',
     permissions: ['storage', 'webNavigation'],
