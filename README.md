@@ -2,6 +2,8 @@
 
 > **Navigation redirects for the masses.**
 
+![Latest Re-Nav screenshot](./images/re-nav-version-0-1-0.png)
+
 ## Installation
 
 You can install Re-Nav through the stores linked above, [manually from a file] (see [the Releases page] for ZIP files) or [from source](#development).
