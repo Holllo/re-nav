@@ -19,7 +19,7 @@ browser.runtime.onInstalled.addListener(async () => {
 });
 
 browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
-  if (!details.url.startsWith('http')) {
+  if (!details.url.startsWith('http') || details.frameId > 0) {
     return;
   }
 
