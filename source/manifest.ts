@@ -39,6 +39,11 @@ export default function createManifest(
     manifest.background = {
       scripts: [backgroundScript],
     };
+    manifest.applications = {
+      gecko: {
+        id: '{2dd6149a-403e-4e67-9cf8-5fe64e16c909}',
+      },
+    };
   }
 
   return manifest;
