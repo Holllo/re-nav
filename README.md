@@ -2,6 +2,10 @@
 
 > **Navigation redirects for the masses.**
 
+[![Get Re-Nav for Firefox](./images/mozilla-addons.png)](https://addons.mozilla.org/firefox/addon/re-nav)
+[![Get Re-Nav for Chrome](./images/chrome-web-store.png)](https://chrome.google.com/webstore/detail/efjignaelidacjdhleaojfmkklganjjb)
+[![Get Re-Nav for Edge](./images/microsoft.png)](https://microsoftedge.microsoft.com/addons/detail/efnkhmlaemggdlpalglioeolbbhfpiic)
+
 ![Latest Re-Nav screenshot](./images/re-nav-version-0-1-0.png)
 
 ## Installation
