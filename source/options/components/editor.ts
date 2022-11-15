@@ -145,7 +145,6 @@ export default class Editor extends Component<Props, State> {
       <div class="editor ${hasBeenEdited ? 'has-been-edited' : ''}">
         <select
           class="select"
-          id="matcher-type"
           title="Matcher Type"
           value=${matcherType}
           onChange=${this.onMatcherTypeChange}
@@ -155,7 +154,6 @@ export default class Editor extends Component<Props, State> {
 
         <input
           class="input"
-          id="matcher-value"
           onInput=${this.onMatcherInput}
           placeholder="Matcher Value"
           title="Matcher Value"
@@ -166,7 +164,6 @@ export default class Editor extends Component<Props, State> {
 
         <select
           class="select"
-          id="redirect-type"
           title="Redirect Type"
           value=${redirectType}
           onChange=${this.onRedirectTypeChange}
@@ -176,7 +173,6 @@ export default class Editor extends Component<Props, State> {
 
         <input
           class="input"
-          id="redirect-value"
           onInput=${this.onRedirectInput}
           placeholder="Redirect Value"
           title="Redirect Value"
