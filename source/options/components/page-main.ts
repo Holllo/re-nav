@@ -68,7 +68,7 @@ export class PageMain extends Component<Props, State> {
       id: await storage.nextRedirectId(),
       matcherType: 'hostname',
       matcherValue: 'example.com',
-      redirectType: 'simple',
+      redirectType: 'hostname',
       redirectValue: 'example.org',
     });
     await storage.savePrepared(await storage.prepareForStorage(redirect));
