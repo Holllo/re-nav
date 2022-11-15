@@ -29,6 +29,10 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
     return;
   }
 
+  const tab = await browser.tabs.query({active: true, lastFocusedWindow: true});
+  const currentTabUrl =
+    tab[0]?.url === undefined ? undefined : new URL(tab[0].url);
+
   const url = new URL(details.url);
   const {latestUrl} = await browser.storage.local.get('latestUrl');
   if (redirectDelta < 30_000 && url.href === latestUrl) {
@@ -41,6 +45,15 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
     }
 
     if (redirect.isMatch(url)) {
+      // Don't redirect if the URL before going to a new page is also a match.
+      // This will happen when the user is already on a website that has a
+      // redirect, but for whatever reason hasn't redirected. So it's safe to
+      // assume that they want to stay on this website, rather than get
+      // redirected.
+      if (currentTabUrl !== undefined && redirect.isMatch(currentTabUrl)) {
+        break;
+      }
+
       const redirectedUrl = redirect.redirect(url);
       await browser.tabs.update(details.tabId, {url: redirectedUrl.href});
       await browser.storage.local.set({
