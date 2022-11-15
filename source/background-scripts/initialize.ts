@@ -33,6 +33,13 @@ browser.runtime.onStartup.addListener(async () => {
 });
 
 browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
+  const {redirectsEnabled} = await browser.storage.local.get({
+    redirectsEnabled: true,
+  });
+  if (redirectsEnabled === false) {
+    return;
+  }
+
   if (!details.url.startsWith('http') || details.frameId > 0) {
     return;
   }
