@@ -7,7 +7,7 @@ export default function createManifest(
     name: 'Re-Nav',
     description: 'Navigation redirects for the masses.',
     version: '0.1.1',
-    permissions: ['storage', 'tabs', 'webNavigation'],
+    permissions: ['contextMenus', 'storage', 'tabs', 'webNavigation'],
     options_ui: {
       page: 'options/index.html',
       open_in_tab: true,

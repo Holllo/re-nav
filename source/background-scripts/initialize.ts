@@ -1,6 +1,12 @@
 import browser from 'webextension-polyfill';
 
 import storage from '../redirect/storage.js';
+import {updateBadge} from '../utilities/badge.js';
+import {
+  contextClicked,
+  getContextMenus,
+  initializeContextMenus,
+} from './context-menus.js';
 
 async function browserActionClicked() {
   await browser.runtime.openOptionsPage();
@@ -10,12 +16,20 @@ if (import.meta.env.VITE_BROWSER === 'chromium') {
   browser.action.onClicked.addListener(browserActionClicked);
 } else {
   browser.browserAction.onClicked.addListener(browserActionClicked);
+  void initializeContextMenus();
 }
 
 browser.runtime.onInstalled.addListener(async () => {
+  await initializeContextMenus();
+  await updateBadge();
+
   if (import.meta.env.DEV) {
     await browser.runtime.openOptionsPage();
   }
+});
+
+browser.runtime.onStartup.addListener(async () => {
+  await updateBadge();
 });
 
 browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
@@ -63,4 +77,13 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
       break;
     }
   }
+});
+
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
+  const contextMenus = getContextMenus();
+  const contextMenuIds = new Set<string>(
+    contextMenus.map(({id}) => id ?? 're-nav-unknown'),
+  );
+
+  await contextClicked(contextMenuIds, info, tab);
 });
