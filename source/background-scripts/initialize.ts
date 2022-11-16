@@ -12,13 +12,6 @@ async function browserActionClicked() {
   await browser.runtime.openOptionsPage();
 }
 
-if (import.meta.env.VITE_BROWSER === 'chromium') {
-  browser.action.onClicked.addListener(browserActionClicked);
-} else {
-  browser.browserAction.onClicked.addListener(browserActionClicked);
-  void initializeContextMenus();
-}
-
 browser.runtime.onInstalled.addListener(async () => {
   await initializeContextMenus();
   await updateBadge();
@@ -94,3 +87,10 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 
   await contextClicked(contextMenuIds, info, tab);
 });
+
+if (import.meta.env.VITE_BROWSER === 'chromium') {
+  browser.action.onClicked.addListener(browserActionClicked);
+} else {
+  browser.browserAction.onClicked.addListener(browserActionClicked);
+  void initializeContextMenus();
+}
