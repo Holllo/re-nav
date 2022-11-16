@@ -6,7 +6,7 @@
 [![Get Re-Nav for Chrome](./images/chrome-web-store.png)](https://chrome.google.com/webstore/detail/efjignaelidacjdhleaojfmkklganjjb)
 [![Get Re-Nav for Edge](./images/microsoft.png)](https://microsoftedge.microsoft.com/addons/detail/efnkhmlaemggdlpalglioeolbbhfpiic)
 
-![Latest Re-Nav screenshot](./images/re-nav-version-0-1-0.png)
+![Latest Re-Nav screenshot](./images/re-nav-version-0-2-0.png)
 
 ## Installation
 
