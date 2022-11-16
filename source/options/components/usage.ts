@@ -41,6 +41,11 @@ export default class Usage extends Component {
             To enable or disable a redirect, click the button with the circle.
             If it's filled in the redirect is enabled.
           </li>
+          <li>
+            You can also toggle redirecting entirely by right-clicking the
+            extension icon and clicking "Toggle all redirects". This will show a
+            ✗ next to the extension icon indicating Re-Nav is turned off.
+          </li>
           <li>To remove a redirect click the red button with the ✗ twice.</li>
         </ul>
 
@@ -56,6 +61,11 @@ export default class Usage extends Component {
             less than 30 seconds ago. This acts as a quick bypass so you don't
             have to disable redirects in the options page whenever you don't
             want to be redirected.
+          </li>
+          <li>
+            If your currently active tab is a website that has a redirect
+            associated with it, then redirects for that website won't happen
+            when you click on links or open new tabs from there.
           </li>
         </ul>
 
