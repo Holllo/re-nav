@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 
-import {updateBadge} from '../utilities/badge.js';
+import {toggleAllRedirects} from '../utilities/toggle-all-redirects.js';
 
 type ContextMenu = browser.Menus.CreateCreatePropertiesType;
 
@@ -48,9 +48,6 @@ export async function contextClicked(
   }
 
   if (id === 're-nav-toggle-redirects') {
-    const state = await browser.storage.local.get({redirectsEnabled: true});
-    const redirectsEnabled = !(state.redirectsEnabled as boolean);
-    await browser.storage.local.set({redirectsEnabled});
-    await updateBadge(redirectsEnabled);
+    await toggleAllRedirects();
   }
 }
