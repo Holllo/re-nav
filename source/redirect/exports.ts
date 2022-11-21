@@ -8,7 +8,7 @@ export * from './hostname.js';
 export * from './regex.js';
 export * from './simple.js';
 
-export type Redirects = HostnameRedirect | SimpleRedirect;
+export type Redirects = HostnameRedirect | RegexRedirect | SimpleRedirect;
 
 export function parseRedirect(
   parameters: RedirectParameters,

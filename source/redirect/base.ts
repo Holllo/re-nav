@@ -48,5 +48,5 @@ export abstract class Redirect {
     return false;
   }
 
-  public abstract redirect(url: URL | string): URL;
+  public abstract redirect(url: URL | string): URL | string;
 }

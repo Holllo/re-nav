@@ -68,7 +68,16 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
         break;
       }
 
-      const redirectedUrl = redirect.redirect(url);
+      let redirectedUrl = redirect.redirect(url);
+      if (typeof redirectedUrl === 'string') {
+        try {
+          redirectedUrl = new URL(redirectedUrl);
+        } catch {
+          redirectedUrl = `https://${redirectedUrl as string}`;
+          redirectedUrl = new URL(redirectedUrl);
+        }
+      }
+
       await browser.tabs.update(details.tabId, {url: redirectedUrl.href});
       await browser.storage.local.set({
         latestTime: Date.now(),

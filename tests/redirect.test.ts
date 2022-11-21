@@ -84,7 +84,7 @@ test('Redirect.redirect', (t) => {
     t.snapshot(
       {
         original: url instanceof URL ? url.href : url,
-        redirected: redirect.redirect(url).href,
+        redirected: new URL(redirect.redirect(url)).href,
       },
       `${index} ${redirect.constructor.name}`,
     );
