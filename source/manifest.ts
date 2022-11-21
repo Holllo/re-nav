@@ -12,6 +12,15 @@ export default function createManifest(
       page: 'options/index.html',
       open_in_tab: true,
     },
+    commands: {
+      toggleAllRedirects: {
+        description:
+          "Toggle all redirects, this does the same as the extension icon's right-click option.",
+        suggested_key: {
+          default: 'Alt+Shift+R',
+        },
+      },
+    },
   };
 
   const icons = {

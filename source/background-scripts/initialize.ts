@@ -2,6 +2,7 @@ import browser from 'webextension-polyfill';
 
 import storage from '../redirect/storage.js';
 import {updateBadge} from '../utilities/badge.js';
+import {onCommandsHandler} from './commands.js';
 import {
   contextClicked,
   getContextMenus,
@@ -96,6 +97,8 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 
   await contextClicked(contextMenuIds, info, tab);
 });
+
+browser.commands.onCommand.addListener(onCommandsHandler);
 
 if (import.meta.env.VITE_BROWSER === 'chromium') {
   browser.action.onClicked.addListener(browserActionClicked);
