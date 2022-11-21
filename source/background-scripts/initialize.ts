@@ -49,8 +49,32 @@ browser.webNavigation.onBeforeNavigate.addListener(async (details) => {
     tab[0]?.url === undefined ? undefined : new URL(tab[0].url);
 
   const url = new URL(details.url);
-  const {latestUrl} = await browser.storage.local.get('latestUrl');
-  if (redirectDelta < 30_000 && url.href === latestUrl) {
+
+  // The undefined.local URL will only be used if no redirects have happened yet.
+  const {latestUrl: savedLatestUrl} = await browser.storage.local.get({
+    latestUrl: 'https://undefined.local',
+  });
+
+  const latestUrl = new URL(savedLatestUrl);
+
+  // Set the latest URL protocol to always be the same as the current. Since
+  // only HTTP URLs are checked here, for us HTTP and HTTPS are equivalent.
+  latestUrl.protocol = url.protocol;
+
+  const currentUrlWwwPrefix = url.hostname.startsWith('www.');
+  const latestUrlWwwPrefix = latestUrl.hostname.startsWith('www.');
+  if (currentUrlWwwPrefix && !latestUrlWwwPrefix) {
+    // Then if the current URL is a `www.` URL and the latest one isn't, prefix it
+    // to the latest URL. This helps the manual bypass check.
+    latestUrl.hostname = `www.${latestUrl.hostname}`;
+  } else if (!currentUrlWwwPrefix && latestUrlWwwPrefix) {
+    // Remove `www.` if the latestUrl starts with it but the current URL doesn't.
+    latestUrl.hostname = latestUrl.hostname.slice(4);
+  }
+
+  // Manually bypass any redirects if the latest redirected and current URLs are
+  // the same.
+  if (redirectDelta < 30_000 && url.href === latestUrl.href) {
     return;
   }
 
