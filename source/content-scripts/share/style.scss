@@ -1,0 +1,20 @@
+.re-nav-import {
+  text-align: center;
+}
+
+.import-button {
+  background-color: var(--da-4);
+  border: none;
+  color: var(--background-1);
+  cursor: pointer;
+  font-weight: bold;
+  padding: var(--spacing-08) var(--spacing-32);
+
+  &:hover {
+    background-color: var(--foreground-1);
+  }
+}
+
+.import-success {
+  margin-bottom: var(--spacing-16);
+}

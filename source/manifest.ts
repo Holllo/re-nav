@@ -21,6 +21,14 @@ export default function createManifest(
         },
       },
     },
+    content_scripts: [
+      {
+        css: ['generated:content-scripts/share/style.css'],
+        js: ['content-scripts/share/share.ts'],
+        matches: ['https://holllo.org/re-nav/share/'],
+        run_at: 'document_end',
+      },
+    ],
   };
 
   const icons = {
