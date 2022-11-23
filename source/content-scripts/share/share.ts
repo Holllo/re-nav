@@ -35,7 +35,7 @@ class ImportButton extends Component<Props, State> {
       location.hash.slice(fragmentPrefix.length),
     );
 
-    const invalidRedirectError = "This isn't a valid redirect. ☹️";
+    const invalidRedirectError = "This isn't a valid redirect. ☹";
 
     if (
       !narrowMatcherType(decoded.matcherType) ||
