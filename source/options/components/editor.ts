@@ -1,4 +1,4 @@
-import {ConfirmButton} from '@holllo/preact-components';
+import {ConfirmButton, FeedbackButton} from '@holllo/preact-components';
 import {html} from 'htm/preact';
 import {Component} from 'preact';
 import browser from 'webextension-polyfill';
@@ -13,6 +13,7 @@ import {
   redirectTypes,
 } from '../../redirect/exports.js';
 import storage from '../../redirect/storage.js';
+import {share} from '../../utilities/share-redirect.js';
 
 type Props = {
   redirect: Redirect;
@@ -124,6 +125,11 @@ export default class Editor extends Component<Props, State> {
     this.setState({enabled});
   };
 
+  copyShareLink = async () => {
+    const link = share(this.state);
+    await navigator.clipboard.writeText(link);
+  };
+
   render() {
     const {
       enabled,
@@ -198,6 +204,13 @@ export default class Editor extends Component<Props, State> {
         >
           ${enabled ? '●' : '○'}
         </button>
+        <${FeedbackButton}
+          attributes=${{class: 'button share', title: 'Copy share link'}}
+          click=${this.copyShareLink}
+          feedbackText="💖"
+          text="📋"
+          timeout=${5 * 1000}
+        />
       </div>
     `;
   }

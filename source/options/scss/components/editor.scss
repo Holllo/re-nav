@@ -31,6 +31,10 @@
     &.disabled {
       background-color: var(--da-2);
     }
+
+    &.share {
+      background-color: var(--da-7);
+    }
   }
 
   .input {
