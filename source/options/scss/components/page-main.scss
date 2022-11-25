@@ -8,7 +8,7 @@
   margin-bottom: 16px;
 
   .button {
-    background-color: var(--da-3);
+    background-color: var(--button-background-color, var(--da-3));
     border: none;
     color: var(--db-1);
     cursor: pointer;

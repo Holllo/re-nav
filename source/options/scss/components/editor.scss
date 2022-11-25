@@ -25,15 +25,15 @@
     padding: 0;
 
     &.enabled {
-      background-color: var(--da-4);
+      --button-background-color: var(--da-4);
     }
 
     &.disabled {
-      background-color: var(--da-2);
+      --button-background-color: var(--da-2);
     }
 
     &.share {
-      background-color: var(--da-7);
+      --button-background-color: var(--da-7);
     }
   }
 
