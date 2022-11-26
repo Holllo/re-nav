@@ -49,6 +49,19 @@ export default class Usage extends Component {
           <li>To remove a redirect click the red button with the ✗ twice.</li>
         </ul>
 
+        <p>Sharing & importing redirects:</p>
+        <ul>
+          <li>
+            To share a redirect, click on the button with the clipboard 📋 icon.
+            This will copy a link that you can share around.
+          </li>
+          <li>
+            When you or someone else heads to a share link, it will show the
+            redirect's details and if they have Re-Nav installed it will create
+            an import button on the page.
+          </li>
+        </li>
+
         <p>Some miscellaneous notes:</p>
         <ul>
           <li>Only URLs starting with "http" will be checked.</li>
