@@ -6,7 +6,7 @@ export default function createManifest(
   const manifest: Record<string, unknown> = {
     name: 'Re-Nav',
     description: 'Navigation redirects for the masses.',
-    version: '0.2.0',
+    version: '0.3.0',
     permissions: ['contextMenus', 'storage', 'tabs', 'webNavigation'],
     options_ui: {
       page: 'options/index.html',
