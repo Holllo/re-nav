@@ -79,6 +79,7 @@
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/consistent-type-imports": "off",
+      "complexity": "off",
       "n/file-extension-in-import": "off",
       "no-await-in-loop": "off"
     },
